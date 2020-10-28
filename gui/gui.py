@@ -62,6 +62,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
 
     def _set_connect(self):
         self.open_button.clicked.connect(self.open_pdf_file_dialog)
+        self.bookmark_open_button.clicked.connect(self.open_bookmark_file_dialog)
         self.export_button.clicked.connect(self.write_tree_to_pdf)
         self.bookmark_text_edit.textChanged.connect(self.to_tree_widget)
 
@@ -135,7 +136,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
         self.retranslateUi(self)
 
     def _get_args(self):
-        self.pdf_file_path  = self.pdf_path_edit.text()
+        self.pdf_file_path      = self.pdf_path_edit.text()
+        self.bookmark_file_path = self.bookmark_path_edit.text()
         self.offset         = int(self.add_page_num_box.value())
         self.bookmark_text  = self.bookmark_text_edit.toPlainText()
         self.level0_example = self.level0_edit.text() if self.level0_box.isChecked() else None
@@ -152,6 +154,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
     def open_pdf_file_dialog(self):
         filename, _ = QtWidgets.QFileDialog.getOpenFileName(self, u'Select PDF File', filter="PDF (*.pdf)")
         self.pdf_path_edit.setText(filename)
+
+    def open_bookmark_file_dialog(self):
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName(self, u'Select Bookmark File')
+        self.bookmark_path_edit.setText(filename)
+        self.set_bookmark_text_edit_text_by_file(filename)
+    
+    def set_bookmark_text_edit_text_by_file(self, filename):
+        if os.path.isfile(filename):
+            bookmark_file = open(filename, 'r', encoding='utf-8')
+            bookmark_text = bookmark_file.read()
+            self.bookmark_text_edit.setPlainText(bookmark_text)
+        else:
+            self.statusbar.showMessage(u"[-]: %s Bookmark file doesn't exists" % self.pdf_path, 3000)
 
     def tree_to_dict(self):
         return self.bookmark_tree_widget.tree_to_dict()
