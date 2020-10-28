@@ -3,7 +3,7 @@
 """
 The main GUI model of project.
 """
-
+import os
 import sys
 import webbrowser
 
@@ -187,11 +187,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
                 level0_parent_item = qtree_item
 
     def write_tree_to_pdf(self):
-        try:
-            new_path = self.dict_to_pdf(self.pdf_path, self.tree_to_dict())
-            self.statusbar.showMessage(u"%s Finished！" % new_path, 3000)
-        except PermissionError:
-            self.error_message.showMessage(u"Permission denied！")
+        if os.path.isfile(self.pdf_path):
+            try:
+                new_path = self.dict_to_pdf(self.pdf_path, self.tree_to_dict())
+                self.statusbar.showMessage(u"[+]: %s Finished！" % new_path, 3000)
+            except PermissionError:
+                self.error_message.showMessage(u"[-]: Permission denied！")
+        else:
+            self.statusbar.showMessage(u"[-]: %s PDF file doesn't exists" % self.pdf_path, 3000)
 
     @staticmethod
     def dict_to_pdf(pdf_path, index_dict):
