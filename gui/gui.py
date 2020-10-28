@@ -64,6 +64,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
         self.open_button.clicked.connect(self.open_pdf_file_dialog)
         self.bookmark_open_button.clicked.connect(self.open_bookmark_file_dialog)
         self.export_button.clicked.connect(self.write_tree_to_pdf)
+        self.refresh_bt.clicked.connect(self.refresh_tree_widget)
         self.bookmark_text_edit.textChanged.connect(self.to_tree_widget)
 
         self.level0_box.clicked.connect(self._change_level0_writable)
@@ -170,6 +171,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
 
     def tree_to_dict(self):
         return self.bookmark_tree_widget.tree_to_dict()
+
+    def refresh_tree_widget(self):
+        self.to_tree_widget()
 
     def to_tree_widget(self):
         self.bookmark_tree_widget.clear()
