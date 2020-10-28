@@ -192,7 +192,7 @@ class Ui_PDFBookMark(object):
         self.statusbar = QtWidgets.QStatusBar(PDFBookMark)
         font = QtGui.QFont()
         font.setFamily("Microsoft YaHei UI")
-        font.setPointSize(7)
+        font.setPointSize(10)
         self.statusbar.setFont(font)
         self.statusbar.setObjectName("statusbar")
         PDFBookMark.setStatusBar(self.statusbar)
