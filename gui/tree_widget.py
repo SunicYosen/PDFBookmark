@@ -79,6 +79,20 @@ class TreeWidget(MixinContextMenu):
         self.clear()
         self.addTopLevelItems(items)
 
+    def expand_all_items(self):
+        iterator = QTreeWidgetItemIterator(self)
+        while iterator.value():
+            item = iterator.value()
+            item.setExpanded(True)
+            iterator.__iadd__(1)
+
+    def collapses_all_items(self):
+        iterator = QTreeWidgetItemIterator(self)
+        while iterator.value():
+            item = iterator.value()
+            item.setExpanded(False)
+            iterator.__iadd__(1)
+
     def set_items(self, items):
         self._set_all_items(items)
 
@@ -162,7 +176,7 @@ class TreeWidget(MixinContextMenu):
             count += 1
         return bookmark_dict
 
-    def tree_to_file(self):
+    def save_tree_widget_to_file(self, file_ptr):
         iterator = QTreeWidgetItemIterator(self)
         while iterator.value():
             item = iterator.value()
@@ -170,9 +184,10 @@ class TreeWidget(MixinContextMenu):
             for i in range(item_cols):
                 text = item.text(i)
                 if i == item_cols - 1:
-                    print(text)
+                    file_ptr.write(text + '\n')
                 else:
-                    print(text, end=" ")
+                    file_ptr.write(text + " ")
+                    
             iterator.__iadd__(1)
 
     @staticmethod

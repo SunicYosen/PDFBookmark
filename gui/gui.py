@@ -65,6 +65,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
         self.bookmark_open_button.clicked.connect(self.open_bookmark_file_dialog)
         self.export_button.clicked.connect(self.write_tree_to_pdf)
         self.refresh_bt.clicked.connect(self.refresh_tree_widget)
+        self.open_bt.clicked.connect(self.expand_tree_widget)
+        self.close_bt.clicked.connect(self.collapses_tree_widget)
+        self.bookmark_save_bt.clicked.connect(self.save_bookmark)
         self.bookmark_text_edit.textChanged.connect(self.to_tree_widget)
 
         self.level0_box.clicked.connect(self._change_level0_writable)
@@ -166,6 +169,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
             bookmark_file = open(filename, 'r', encoding='utf-8')
             bookmark_text = bookmark_file.read()
             self.bookmark_text_edit.setPlainText(bookmark_text)
+            bookmark_file.close()
         else:
             self.statusbar.showMessage(u"[-]: %s Bookmark file doesn't exists" % self.pdf_path, 3000)
 
@@ -174,6 +178,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
 
     def refresh_tree_widget(self):
         self.to_tree_widget()
+
+    def expand_tree_widget(self):
+        self.bookmark_tree_widget.expand_all_items()
+
+    def collapses_tree_widget(self):
+        self.bookmark_tree_widget.collapses_all_items()
+
+    def save_bookmark(self):
+        filename, _ = QtWidgets.QFileDialog.getOpenFileName(self, u'Select A New File to Save Bookmark')
+        if os.path.isfile(filename):
+            bookmark_file = open(filename, 'w+')
+            self.bookmark_tree_widget.save_tree_widget_to_file(bookmark_file)
+            bookmark_file.close()
+            self.statusbar.showMessage(u"[+]: %s Bookmark Write Finished！" % filename, 3000)
+
+        else:
+            self.statusbar.showMessage(u"[-]: %s file does not exists！" % filename, 3000)
 
     def to_tree_widget(self):
         self.bookmark_tree_widget.clear()

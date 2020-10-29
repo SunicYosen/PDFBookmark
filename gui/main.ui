@@ -137,13 +137,24 @@ p, li { white-space: pre-wrap; }
            </spacer>
           </item>
           <item>
+           <widget class="QToolButton" name="bookmark_save_bt">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>icons/save.svg</normaloff>icons/save.svg</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="open_bt">
             <property name="text">
              <string/>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>./icons/open.svg</normaloff>./icons/open.svg</iconset>
+              <normaloff>icons/open.svg</normaloff>icons/open.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -160,7 +171,7 @@ p, li { white-space: pre-wrap; }
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>./icons/close.svg</normaloff>./icons/close.svg</iconset>
+              <normaloff>icons/close.svg</normaloff>icons/close.svg</iconset>
             </property>
            </widget>
           </item>
