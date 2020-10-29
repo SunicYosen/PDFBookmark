@@ -208,7 +208,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
         for book_mark in bookmark_list:
             title, num = split_page_num(book_mark)
             bm_level   = check_level(title, self.level0_re, self.level1_re, self.level2_re)
-            page_num   = num + self.offset - 1
+            page_num   = num + self.offset
             page_num   = max(page_num, last_num)
             last_num   = page_num
 

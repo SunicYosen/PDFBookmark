@@ -54,7 +54,7 @@ def _bookmark_dict_generator(bookmark_text, pages_offset=0, level0_re=None, leve
     for index, bookmark in enumerate(bookmark_list):
         title, num = split_page_num(bookmark)
 
-        page_num_temp = num + pages_offset - 1
+        page_num_temp = num + pages_offset
 
         if page_num_temp > page_num:
             page_num = page_num_temp
