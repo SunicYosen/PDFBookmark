@@ -2,6 +2,8 @@
 
 根据已有的目录文本为你的PDF自动添加导航书签。
 
+![Example](pictures/example.png)
+
 **此项目基于：[https://github.com/chroming/pdfdir](https://github.com/chroming/pdfdir). 致谢[chroming](https://github.com/chroming/)！**
 
 ## 软件功能
