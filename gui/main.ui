@@ -295,11 +295,35 @@ p, li { white-space: pre-wrap; }
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <widget class="QCheckBox" name="level0_box">
-            <property name="text">
-             <string>首级</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QCheckBox" name="level0_box">
+              <property name="text">
+               <string>首级</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="level0_space">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="level0_re_box">
+              <property name="text">
+               <string>RE</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QLineEdit" name="level0_edit">
@@ -312,11 +336,35 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="level1_box">
-            <property name="text">
-             <string>二级</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QCheckBox" name="level1_box">
+              <property name="text">
+               <string>二级</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="level1_space">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="level1_re_box">
+              <property name="text">
+               <string>RE</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QLineEdit" name="level1_edit">
@@ -329,11 +377,35 @@ p, li { white-space: pre-wrap; }
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="level2_box">
-            <property name="text">
-             <string>三级</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QCheckBox" name="level2_box">
+              <property name="text">
+               <string>三级</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="level2_space">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="level2_re_box">
+              <property name="text">
+               <string>RE</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QLineEdit" name="level2_edit">

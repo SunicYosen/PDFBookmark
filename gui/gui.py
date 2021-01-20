@@ -59,6 +59,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
         self._set_connect()
         self._set_action()
         self._set_level_edit_unwritable()
+        self._set_level_re_box_uncheckable()
 
     def _set_connect(self):
         self.open_button.clicked.connect(self.open_pdf_file_dialog)
@@ -87,6 +88,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
         self.level0_edit.setEnabled(False)
         self.level1_edit.setEnabled(False)
         self.level2_edit.setEnabled(False)
+    
+    def _set_level_re_box_uncheckable(self):
+        self.level0_re_box.setEnabled(False)
+        self.level1_re_box.setEnabled(False)
+        self.level2_re_box.setEnabled(False)
 
     def _level_button_clicked(self, level_str):
         context_menu = QtWidgets.QMenu()
@@ -101,12 +107,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
 
     def _change_level0_writable(self):
         self.level0_edit.setEnabled(True if self.level0_box.isChecked() else False)
+        self.level0_re_box.setEnabled(True if self.level0_box.isChecked() else False)
 
     def _change_level1_writable(self):
         self.level1_edit.setEnabled(True if self.level1_box.isChecked() else False)
+        self.level1_re_box.setEnabled(True if self.level1_box.isChecked() else False)
 
     def _change_level2_writable(self):
         self.level2_edit.setEnabled(True if self.level2_box.isChecked() else False)
+        self.level2_re_box.setEnabled(True if self.level2_box.isChecked() else False)
 
     def _add_page_num_to_item(self, item):
         current_num = int(item.text(1))
@@ -124,11 +133,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
 
     @staticmethod
     def _open_home_page():
-        webbrowser.open('https://github.com/sunicyosen', new=1)
+        webbrowser.open('https://github.com/SunicYosen/PDFBookmark', new=1)
 
     @staticmethod
     def _open_help_page():
-        webbrowser.open('https://github.com/sunicyosen', new=1)
+        webbrowser.open('https://github.com/SunicYosen/PDFBookmark/issues/new', new=1)
 
     def to_english(self):
         self.trans.load("./language/en")
@@ -147,9 +156,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_PDFBookMark, ControlButtonMixin):
         self.level0_example = self.level0_edit.text() if self.level0_box.isChecked() else None
         self.level1_example = self.level1_edit.text() if self.level1_box.isChecked() else None
         self.level2_example = self.level2_edit.text() if self.level2_box.isChecked() else None
-        self.level0_re      = get_level_re('level0', self.level0_example)
-        self.level1_re      = get_level_re('level1', self.level1_example)
-        self.level2_re      = get_level_re('level2', self.level2_example)
+        self.level0_is_re   = self.level0_re_box.isChecked()
+        self.level1_is_re   = self.level0_re_box.isChecked()
+        self.level2_is_re   = self.level0_re_box.isChecked()
+        self.level0_re      = get_level_re('level0', self.level0_example, is_re=self.level0_is_re)
+        self.level1_re      = get_level_re('level1', self.level1_example, is_re=self.level1_is_re)
+        self.level2_re      = get_level_re('level2', self.level2_example, is_re=self.level2_is_re)
 
     @property
     def pdf_path(self):
