@@ -12,6 +12,7 @@ Public:
 from .pdf import PDF
 
 def _add_bookmark(pdf, bookmark_dict):
+
     if not bookmark_dict:
         return None
 
@@ -20,10 +21,15 @@ def _add_bookmark(pdf, bookmark_dict):
     parent_dict  = {}
     max_page_num = pdf.writer.getNumPages() - 1
 
-    for bookmark_index in range(bookmark_num+1):
+    for bookmark_index in range(bookmark_num + 1):
         value        = bookmark_dict[bookmark_index]
-        bookmark_ref = pdf.add_bookmark(value.get('title', ''), min(value.get('page_num', 1) - 1, max_page_num),
-                                    parent_dict.get(value.get('parent')))
+        title        = value.get('title', '')
+        page_num     = min(value.get('page_num', 1) - 1, max_page_num)
+        parent       = parent_dict.get(value.get('parent'))
+        
+        bookmark_ref = pdf.add_bookmark(title    = title,
+                                        page_num = page_num,
+                                        parent   = parent)
 
         parent_dict[bookmark_index] = bookmark_ref
 

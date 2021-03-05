@@ -8,8 +8,8 @@ public:
 """
 
 import os
-
-from PyPDF2 import PdfFileWriter, PdfFileReader, utils
+from typing import Iterator
+from PyPDF4 import PdfFileWriter, PdfFileReader, utils
 
 class PDF(object):
     """
@@ -35,12 +35,15 @@ class PDF(object):
 
     """
     def __init__(self, path, path_new=None):
-        self.path = path
+        self.path     = path
         self.path_new = path_new
-        reader = PdfFileReader(open(path, "rb"), strict=False)
-        self.writer = PdfFileWriter()
-        self.writer.appendPagesFromReader(reader)
-        self.writer.addMetadata({k: v for k, v in reader.getDocumentInfo().items()
+
+        self.reader       = PdfFileReader(open(path, "rb"), strict=False)
+        self.org_outlines = self.reader.getOutlines()
+
+        self.writer       = PdfFileWriter()
+        self.writer.appendPagesFromReader(self.reader)
+        self.writer.addMetadata({k: v for k, v in self.reader.getDocumentInfo().items()
                                  if isinstance(v, (utils.string_type, utils.bytes_type))})
 
     @property
@@ -52,19 +55,30 @@ class PDF(object):
             self.path_new = name + '_new' + ext
             return self.path_new
 
-    def add_bookmark(self, title, page_num, parent=None):
+    def add_bookmark(self, title, page_num, parent=None, color=None, bold=False, italic=False, fit='/Fit', *args):
         """
-        add a bookmark to pdf file with title and page num.
-        if it's a child bookmark, add a parent argument.
+        Add a bookmark to pdf file with title and page num.
+        If it's a child bookmark, add a parent argument.
 
         :Args
 
-        title: str, the bookmark title.
+        title:    str, the bookmark title.
         page_num: int, the page num this bookmark refer to.
-        parent: IndirectObject(the addBookmark() return object), the parent of this bookmark, the default is None.
-
+        parent:   IndirectObject(the addBookmark() return object), the parent of this bookmark, the default is None.
+        color:    param tuple color: Color of the bookmark as a red, green, blue tuple from 0.0 to 1.0
+        bold:     param bool bold: Bookmark is bold
+        italic:   param bool italic: Bookmark is italic
+        fit:      param str fit: The fit of the destination page.
+                '/Fit'	    No additional arguments, Default
+                '/XYZ'	    [left] [top] [zoomFactor]
+                '/FitH'	    [top]
+                '/FitV'	    [left]
+                '/FitR'	    [left] [bottom] [right] [top]
+                '/FitB'	    No additional arguments
+                '/FitBH'	[top]
+                '/FitBV'	[left]
         """
-        return self.writer.addBookmark(title, page_num, parent=parent)
+        return self.writer.addBookmark(title, page_num, parent=parent, color=color, bold=bold, italic=italic, fit=fit, *args)
 
     def save_pdf(self):
         """
